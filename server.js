@@ -87,6 +87,92 @@ router.post('/signin', function (req, res) {
     })
 });
 
+// Movies Collection
+// Updating route to /movies
+router.route('/movies')
+    .delete(authController.isAuthenticated, (req, res) => {
+        console.log(req.body);
+        res = res.status(200);
+        if (req.get('Content-Type')) {
+            res = res.type(req.get('Content-Type'));
+        }
+        var o = getJSONObjectForMovieRequirement(req);
+        o.status = 200;
+        o.message = "movie deleted";
+        res.json(o);
+    }
+    )
+    .put(authJwtController.isAuthenticated, (req, res) => {
+        console.log(req.body);
+        res = res.status(200);
+        if (req.get('Content-Type')) {
+            res = res.type(req.get('Content-Type'));
+        }
+        var o = getJSONObjectForMovieRequirement(req);
+        o.status = 200;
+        o.message = "movie updated";
+        res.json(o);
+    }
+    )
+    .all((req, res) => {
+        // Any other HTTP Method
+        // Returns a message stating that the HTTP method is unsupported.
+        res.status(405).send({ message: 'HTTP method not supported.' });
+    });
+
+// Reviews Collection
+// Updating route to /movies
+router.route('/review')
+    .delete(authController.isAuthenticated, (req, res) => {
+        console.log(req.body);
+        res = res.status(200);
+        if (req.get('Content-Type')) {
+            res = res.type(req.get('Content-Type'));
+        }
+        var o = getJSONObjectForMovieRequirement(req);
+        o.status = 200;
+        o.message = "movie deleted";
+        res.json(o);
+    }
+    )
+    .put(authJwtController.isAuthenticated, (req, res) => {
+        console.log(req.body);
+        res = res.status(200);
+        if (req.get('Content-Type')) {
+            res = res.type(req.get('Content-Type'));
+        }
+        var o = getJSONObjectForMovieRequirement(req);
+        o.status = 200;
+        o.message = "Review updated!";
+        res.json(o);
+    }
+    )
+    .post(authJwtController.isAuthenticated, (req, res) => {
+        var newReview = new Review;
+        newReview.movieId = req.body.movieId;
+        newReview.username = req.body.username;
+        newReview.review = req.body.review;
+        newReview.rating = req.body.rating;
+
+        newReview.save(function(err){
+            if (err) {
+                if (err.code == 11000)
+                    return res.json({ success: false, message: 'Something went wrong when saving the review.'});
+                else
+                    return res.json(err);
+            }
+
+            res.json({success: true, msg: 'Successfully created new review.'})
+        });
+    }
+    )
+
+    .all((req, res) => {
+        // Any other HTTP Method
+        // Returns a message stating that the HTTP method is unsupported.
+        res.status(405).send({ message: 'HTTP method not supported.' });
+    });
+
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
 module.exports = app; // for testing only
