@@ -115,6 +115,25 @@ function getJSONObjectForMovieRequirement(req) {
 });
 */
 
+// From class lecture
+/*db.movies.aggregate([
+    {
+    $lookup:
+    {
+        from: "reviews",
+        localField: "_id",
+        foreignField: "movie_id",
+        as: "reviews"
+    },
+    },
+{
+    $addField:
+    {
+        avgRating: {$avg: ["reviews.rating"]}
+    }
+}
+])
+*/
 
 router.post('/signup', function(req, res) {
     if (!req.body.username || !req.body.password) {
@@ -165,6 +184,17 @@ router.post('/signin', function (req, res) {
 // Movies Collection
 // Updating route to /movies
 router.route('/movies')
+
+    .get(authController.isAuthenticated, (req, res) => {
+        Movie.find(function(err, movies) {
+            if (err) {
+                res.status(500).send(err);
+            }
+            res.json(movies);
+        });
+    })
+    
+
     .post(authController.isAuthenticated, (req, res) => {
         var movie = new Movie()
         movie.title = req.body.title;
