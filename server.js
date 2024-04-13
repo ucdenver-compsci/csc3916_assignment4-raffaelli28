@@ -92,7 +92,7 @@ function getJSONObjectForMovieRequirement(req) {
 
 
 // Aggregate function:
-Review.aggregate([
+/*Review.aggregate([
     {
     $match: { _id: movieId}
     },
@@ -113,7 +113,7 @@ Review.aggregate([
         console.log(result);
     }
 });
-
+*/
 
 
 router.post('/signup', function(req, res) {
