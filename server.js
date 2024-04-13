@@ -92,7 +92,7 @@ router.post('/signin', function (req, res) {
 // Updating route to /movies
 router.route('/movies')
     .post(authController.isAuthenticated, (req, res) => {
-        var movie = new Movie
+        var movie = new Movie()
         movie.title = req.body.title;
         movie.releaseDate = req.body.releaseDate;
         movie.genre = req.body.genre;
@@ -107,7 +107,7 @@ router.route('/movies')
             }
 
             res.json({success: true, msg: 'Successfully created new movie.'})
-
+        })
     })
     .delete(authController.isAuthenticated, (req, res) => {
         console.log(req.body);
@@ -195,5 +195,3 @@ router.route('/reviews')
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
 module.exports = app; // for testing only
-
-
