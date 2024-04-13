@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 mongoose.connect(process.env.DB);
 
 // Movie schema
-var MovieSchema = new mongoose.Schema({
+var MovieSchema = new Schema({
 
     title: {type: String, required: true, index: true},
     releaseDate: Date,
