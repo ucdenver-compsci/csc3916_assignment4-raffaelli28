@@ -24,6 +24,54 @@ app.use(passport.initialize());
 
 var router = express.Router();
 
+
+const GA_TRACKING_ID = process.env.GA_KEY;
+
+function trackDimension(category, action, label, value, dimension, metric) {
+
+    var options = { method: 'GET',
+        url: 'https://www.google-analytics.com/collect',
+        qs:
+            {   // API Version.
+                v: '1',
+                // Tracking ID / Property ID.
+                tid: GA_TRACKING_ID,
+                // Random Client Identifier. Ideally, this should be a UUID that
+                // is associated with particular user, device, or browser instance.
+                cid: crypto.randomBytes(16).toString("hex"),
+                // Event hit type.
+                t: 'event',
+                // Event category.
+                ec: category,
+                // Event action.
+                ea: action,
+                // Event label.
+                el: label,
+                // Event value.
+                ev: value,
+                // Custom Dimension
+                cd1: dimension,
+                // Custom Metric
+                cm1: metric
+            },
+        headers:
+            {  'Cache-Control': 'no-cache' } };
+
+    return rp(options);
+}
+
+
+router.route('/test')
+    .get(function (req, res) {
+        // Event value must be numeric.
+        trackDimension('Feedback', 'Rating', 'Feedback for Movie', '3', 'Guardian\'s of the Galaxy 2', '1')
+            .then(function (response) {
+                console.log(response.body);
+                res.status(200).send('Event tracked.').end();
+            })
+    });
+
+
 function getJSONObjectForMovieRequirement(req) {
     var json = {
         headers: "No headers",
@@ -44,7 +92,7 @@ function getJSONObjectForMovieRequirement(req) {
 
 
 // Aggregate function:
-/*Movie.aggregate([
+Review.aggregate([
     {
     $match: { _id: movieId}
     },
@@ -53,12 +101,19 @@ function getJSONObjectForMovieRequirement(req) {
             from: "movies",
             localField: "movieId",
             foreignField: "_id",
-
+            as: "Reviews for Movie"
         }
     }
 
-])
-*/
+]).exec(function(err, result){
+    if(err){
+        // Handle the error
+    }
+    else{
+        console.log(result);
+    }
+});
+
 
 
 router.post('/signup', function(req, res) {
@@ -173,7 +228,7 @@ router.route('/reviews')
         res.json(o);
     }
     )
-    .put(authJwtController.isAuthenticated, (req, res) => {
+    .get(authJwtController.isAuthenticated, (req, res) => {
         console.log(req.body);
         res = res.status(200);
         if (req.get('Content-Type')) {
@@ -187,6 +242,11 @@ router.route('/reviews')
     )
     .post(authJwtController.isAuthenticated, (req, res) => {
         var newReview = new Review();
+        // I have changed this because I couldn't get the actual movie ID without
+        // going in the database and manually adding it from there
+        // However, if you wish to do it that way, you can uncomment the following
+        // line and comment newReview.movieId = req.body.title;
+        // newReview.movieId = req.body.movieId;
         newReview.movieId = req.body.title;
         newReview.username = req.body.username;
         newReview.review = req.body.review;
