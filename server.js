@@ -98,7 +98,7 @@ router.route('/movies')
         movie.genre = req.body.genre;
         movie.actors = req.body.actors;
 
-        newReview.save(function(err){
+        movie.save(function(err){
             if (err) {
                 if (err.code == 11000)
                     return res.json({ success: false, message: 'Something went wrong when saving the movie.'});
