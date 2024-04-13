@@ -87,9 +87,28 @@ router.post('/signin', function (req, res) {
     })
 });
 
+
 // Movies Collection
 // Updating route to /movies
 router.route('/movies')
+    .post(authController.isAuthenticated, (req, res) => {
+        var movie = new Movie
+        movie.title = req.body.title;
+        movie.releaseDate = req.body.releaseDate;
+        movie.genre = req.body.genre;
+        movie.actors = req.body.actors;
+
+        newReview.save(function(err){
+            if (err) {
+                if (err.code == 11000)
+                    return res.json({ success: false, message: 'Something went wrong when saving the movie.'});
+                else
+                    return res.json(err);
+            }
+
+            res.json({success: true, msg: 'Successfully created new movie.'})
+
+    })
     .delete(authController.isAuthenticated, (req, res) => {
         console.log(req.body);
         res = res.status(200);
