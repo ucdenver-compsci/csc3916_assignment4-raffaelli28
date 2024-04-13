@@ -121,8 +121,8 @@ router.route('/movies')
     });
 
 // Reviews Collection
-// Updating route to /movies
-router.route('/review')
+// Updating route to /reviews
+router.route('/reviews')
     .delete(authController.isAuthenticated, (req, res) => {
         console.log(req.body);
         res = res.status(200);
@@ -131,7 +131,7 @@ router.route('/review')
         }
         var o = getJSONObjectForMovieRequirement(req);
         o.status = 200;
-        o.message = "movie deleted";
+        o.message = "Review deleted";
         res.json(o);
     }
     )
