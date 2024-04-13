@@ -42,6 +42,25 @@ function getJSONObjectForMovieRequirement(req) {
     return json;
 }
 
+
+// Aggregate function:
+/*Movie.aggregate([
+    {
+    $match: { _id: movieId}
+    },
+    {
+        $lookup:{
+            from: "movies",
+            localField: "movieId",
+            foreignField: "_id",
+
+        }
+    }
+
+])
+*/
+
+
 router.post('/signup', function(req, res) {
     if (!req.body.username || !req.body.password) {
         res.json({success: false, msg: 'Please include both username and password to signup.'})
@@ -168,7 +187,7 @@ router.route('/reviews')
     )
     .post(authJwtController.isAuthenticated, (req, res) => {
         var newReview = new Review();
-        newReview.movieId = req.body.movieId;
+        newReview.movieId = req.body.title;
         newReview.username = req.body.username;
         newReview.review = req.body.review;
         newReview.rating = req.body.rating;
