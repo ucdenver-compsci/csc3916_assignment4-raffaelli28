@@ -90,7 +90,7 @@ function getJSONObjectForMovieRequirement(req) {
     return json;
 }
 
-
+/*
 const aggregate = [
     {
       $match: { _id: movieId }
@@ -115,7 +115,7 @@ const aggregate = [
 else{
     console.log(result);
 } });
-  
+*/  
 
 // Aggregate function:
 /*Review.aggregate([
