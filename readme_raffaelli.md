@@ -1,9 +1,6 @@
 
-I have been having many issues with the aggreagate and the analytics function for registering events.
-I have done everything from the extra credit videos, meaning creating an Analytics collection, adding custom dimensions,
-and adding the G_ID to the .env file of the API and environment variable section on Render. However, for some reason
-I keep having problems and render complains about the random function that is in that block of code. I have been trying
-to fix this issue for hours, but I was not successful, and I understand if no partial credit is awarded.
+I have been having many issues with the aggreagate portion of this homework.
+Please look in the server.js and all my attempts of making it work should be commented out in there.
 
 
 Run in Postman link: [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/32464719-790c7deb-7040-41e2-8bc2-6f6c5d33a633?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D32464719-790c7deb-7040-41e2-8bc2-6f6c5d33a633%26entityType%3Dcollection%26workspaceId%3D18bd4570-2239-401b-8c0d-06d6ab0b384f#?env%5BHomework_4%5D=W3sia2V5IjoiSldUIiwidmFsdWUiOiJKV1QgZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBaQ0k2SWpZMk1XRmxOakJpT1dGbE0yVTJNREExTlRnNE9UVmpZeUlzSW5WelpYSnVZVzFsSWpvaWJXVnlZMlZrWlhNaUxDSnBZWFFpT2pFM01UTXdOREExTWpsOS5iM0dvTGZoNjB2RlZ0LXppbFpXVEt1NWFPVERUOUM2VkxmenVxd3psQWdBXG4iLCJlbmFibGVkIjp0cnVlLCJ0eXBlIjoiZGVmYXVsdCIsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6MH0seyJrZXkiOiJqd3QiLCJ2YWx1ZSI6IkpXVCBleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJalkyTVdGbE5qQmlPV0ZsTTJVMk1EQTFOVGc0T1RWall5SXNJblZ6WlhKdVlXMWxJam9pYldWeVkyVmtaWE1pTENKcFlYUWlPakUzTVRNd05EQTFNamw5LmIzR29MZmg2MHZGVnQtemlsWldUS3U1YU9URFQ5QzZWTGZ6dXF3emxBZ0EiLCJlbmFibGVkIjp0cnVlLCJ0eXBlIjoiZGVmYXVsdCIsInNlc3Npb25WYWx1ZSI6IkpXVC4uLiIsInNlc3Npb25JbmRleCI6MX1d)
