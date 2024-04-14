@@ -91,6 +91,32 @@ function getJSONObjectForMovieRequirement(req) {
 }
 
 
+const aggregate = [
+    {
+      $match: { _id: movieId }
+    },
+    {
+      $lookup: {
+        from: 'reviews',
+        localField: '_id',
+        foreignField: 'movieId',
+        as: 'movieReviews'
+      }
+    },
+    {
+      $addFields: {
+        avgRating: { $avg: '$movieReviews.rating' }
+      }
+    }
+  ];
+  Movie.aggregate(aggregate).exec(function(err, doc) { if(err){
+    // Handle the error
+}
+else{
+    console.log(result);
+} });
+  
+
 // Aggregate function:
 /*Review.aggregate([
     {
@@ -186,7 +212,7 @@ router.post('/signin', function (req, res) {
 // Updating route to /movies
 router.route('/movies')
 
-    .get(authController.isAuthenticated, (req, res) => {
+    .get(authJwtController.isAuthenticated, (req, res) => {
         Movie.find(function(err, movies) {
             if (err) {
                 res.status(500).send(err);
@@ -202,7 +228,7 @@ router.route('/movies')
         }
     })
 */
-    .post(authController.isAuthenticated, (req, res) => {
+    .post(aauthJwtController.isAuthenticated, (req, res) => {
         var movie = new Movie()
         movie.title = req.body.title;
         movie.releaseDate = req.body.releaseDate;
@@ -220,7 +246,7 @@ router.route('/movies')
             res.json({success: true, msg: 'Successfully created new movie.'})
         })
     })
-    .delete(authController.isAuthenticated, (req, res) => {
+    .delete(authJwtController.isAuthenticated, (req, res) => {
         console.log(req.body);
         res = res.status(200);
         if (req.get('Content-Type')) {
@@ -253,7 +279,7 @@ router.route('/movies')
 // Reviews Collection
 // Updating route to /reviews
 router.route('/reviews')
-    .delete(authController.isAuthenticated, (req, res) => {
+    .delete(authJwtController.isAuthenticated, (req, res) => {
         console.log(req.body);
         res = res.status(200);
         if (req.get('Content-Type')) {
