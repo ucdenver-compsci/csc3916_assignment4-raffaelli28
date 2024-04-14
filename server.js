@@ -64,7 +64,7 @@ function trackDimension(category, action, label, value, dimension, metric) {
 router.route('/test')
     .get(function (req, res) {
         // Event value must be numeric.
-        trackDimension('Feedback', 'Rating', 'Feedback for Movie', '3', 'Guardian\'s of the Galaxy 2', '1')
+        trackDimension('Feedback', 'Rating', 'Feedback for Movie', '3', 'Titanic', '1')
             .then(function (response) {
                 console.log(response.body);
                 res.status(200).send('Event tracked.').end();
