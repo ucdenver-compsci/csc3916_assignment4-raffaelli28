@@ -228,7 +228,7 @@ router.route('/movies')
         }
     })
 */
-    .post(aauthJwtController.isAuthenticated, (req, res) => {
+    .post(authJwtController.isAuthenticated, (req, res) => {
         var movie = new Movie()
         movie.title = req.body.title;
         movie.releaseDate = req.body.releaseDate;
