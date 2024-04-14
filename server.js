@@ -25,6 +25,12 @@ app.use(passport.initialize());
 var router = express.Router();
 
 
+const crypto = require("crypto");
+
+var rp = require('request-promise');
+
+
+
 const GA_TRACKING_ID = process.env.GA_KEY;
 
 function trackDimension(category, action, label, value, dimension, metric) {
@@ -211,7 +217,7 @@ router.post('/signin', function (req, res) {
 // Movies Collection
 // Updating route to /movies
 router.route('/movies')
-
+/*
     .get(authJwtController.isAuthenticated, (req, res) => {
         Movie.find(function(err, movies) {
             if (err) {
@@ -220,6 +226,7 @@ router.route('/movies')
             res.json(movies);
         });
     })
+    */
 /*
     .get(authController.isAuthenticated, (req, res) => {
         let getReviews = req.params.movieId;
@@ -228,6 +235,63 @@ router.route('/movies')
         }
     })
 */
+.get(authJwtController.isAuthenticated, (req, res) => {
+    if (req.query && req.query.reviews == "true") {
+       Movie.aggregate([
+          {
+                $lookup: {
+
+                    from: 'reviews',
+
+                    localField: '_id',
+
+                    foreignField: 'movieId',
+
+                    as: 'reviews'
+                }
+            },
+
+            {
+
+                $addFields: {
+
+                    avgRating: { $avg: '$reviews.rating' }
+
+                }
+
+            }
+
+        ]).exec(function(err, doc) {
+
+            if (err) {
+
+                res.status(500).send(err);
+
+            }
+
+            res.json(doc);
+
+        });
+
+    }
+
+    else {
+
+        Movie.find(function(err, movies) {
+
+            if (err) {
+
+                res.status(500).send(err);
+
+            }
+
+            res.json(movies);
+
+        });
+
+    }
+
+})
     .post(authJwtController.isAuthenticated, (req, res) => {
         var movie = new Movie()
         movie.title = req.body.title;
