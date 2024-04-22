@@ -277,7 +277,7 @@ router.route('/movies')
 
     else {
 
-        Movie.find(function(err, movies) {
+        Movie.find(function(err, reviews) {
 
             if (err) {
 
@@ -285,7 +285,7 @@ router.route('/movies')
 
             }
 
-            res.json(movies);
+            res.json(reviews);
 
         });
 
