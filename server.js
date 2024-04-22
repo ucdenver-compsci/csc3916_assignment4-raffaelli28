@@ -389,11 +389,11 @@ router.route('/reviews')
                 if (!Movie.find({movieId: 'newReview.movieId'}))
                     return res.json({ success: false, message: 'INVALID, movie not in database.'});
                 else
-                    //return res.json(err);
-                    res.json({success: true, msg: 'VALID, Successfully created new review.'})
+                    return res.json({ success: false, message: 'INVALID, movie not in database.'});
+                    
             }
 
-            
+            res.json({success: true, msg: 'VALID, Successfully created new review.'})
         });
     }
     )
