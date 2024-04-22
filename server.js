@@ -367,11 +367,29 @@ router.route('/reviews')
             res = res.type(req.get('Content-Type'));
         }
         var o = getJSONObjectForMovieRequirement(req);
+        var newReview = new Review();
         o.status = 200;
-        o.message = "Review updated!";
-        res.json(o);
+        newReview.movieId = req.body.movieId;
+
+        if (Review.find({movieId: newReview.movieId})){
+            // o.message = "Review updated!";
+            Review.find(function(err, reviews) {
+
+                if (err) {
+    
+                    res.status(500).send(err);
+    
+                }
+    
+                res.json(reviews);
+        })
     }
-    )
+        else{
+            res.json({ success: false, message: 'INVALID, movie has no reviews.'})
+        }
+    })
+
+
     .post(authJwtController.isAuthenticated, (req, res) => {
         var newReview = new Review();
         // I have changed this because I couldn't get the actual movie ID without
