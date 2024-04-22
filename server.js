@@ -243,7 +243,7 @@ router.route('/movies')
 
                     from: 'reviews',
 
-                    localField: 'review',
+                    localField: '_id',
 
                     foreignField: 'movieId',
 
@@ -255,7 +255,7 @@ router.route('/movies')
 
                 $addFields: {
 
-                    theReviews: { $TheReview: '$Review.review' }
+                    theReviews: { $TheReview: '$reviews.review' }
 
                 }
 
