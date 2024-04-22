@@ -241,11 +241,11 @@ router.route('/movies')
           {
                 $lookup: {
 
-                    from: 'reviews',
+                    from: 'Reviews',
 
                     localField: '_id',
 
-                    foreignField: 'review',
+                    foreignField: 'movieId',
 
                     as: 'reviews'
                 }
@@ -255,12 +255,8 @@ router.route('/movies')
 
                 $addFields: {
 
-                    avgRating: { $avg: '$reviews.rating' }
+                    theReviews: { $TheReview: '$Reviews.review' }
 
-                },
-
-                $addFields:{
-                    reviewString: { $review: '$reviews.review'}
                 }
 
             }
