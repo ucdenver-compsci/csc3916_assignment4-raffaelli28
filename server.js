@@ -386,13 +386,14 @@ router.route('/reviews')
 
         newReview.save(function(err){
             if (err) {
-                if (!Movie.findById(newReview.movieId))
+                if (!Movie.find({movieId: 'newReview.movieId'}))
                     return res.json({ success: false, message: 'INVALID, movie not in database.'});
-                //else
+                else
                     //return res.json(err);
+                    res.json({success: true, msg: 'VALID, Successfully created new review.'})
             }
 
-            res.json({success: true, msg: 'VALID, Successfully created new review.'})
+            
         });
     }
     )
