@@ -384,17 +384,34 @@ router.route('/reviews')
         newReview.review = req.body.review;
         newReview.rating = req.body.rating;
 
-        newReview.save(function(err){
-            if (err) {
-                if (!Movie.find({movieId: 'newReview.movieId'}))
-                    return res.json({ success: false, message: 'INVALID, movie not in database.'});
-                else
-                    return res.json({ success: false, message: 'INVALID, movie not in database.'});
-                    
-            }
+        //newReview.save(function(err){
+        //    if (err) {
+        //        if (!Movie.find({movieId: 'newReview.movieId'}))
+        //            return res.json({ success: false, message: 'INVALID, movie not in database.'});
+        //        else
+        //            return res.json({ success: false, message: 'INVALID, movie not in database.'});
+        //            
+        //    }
+//
+ //           res.json({success: true, msg: 'VALID, Successfully created new review.'})
+  //      });
 
-            res.json({success: true, msg: 'VALID, Successfully created new review.'})
-        });
+        if (Movie.find({movieId: 'newReview.movieId'})){
+            newReview.save(function(err)){
+                if(err) {
+                    if (err.code == 11000)
+                    return res.json({ success: false, message: 'Something went wrong when saving the movie.'});
+                else
+                    return res.json(err);
+                }
+
+                res.json({success: true, msg: 'VALID, Successfully created new review.'})
+            }
+        }
+
+        else {
+            res.json({ success: false, message: 'INVALID, movie not in database.'});
+        }
     }
     )
 
