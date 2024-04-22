@@ -236,9 +236,9 @@ router.route('/movies')
     })
 */
 .get(authJwtController.isAuthenticated, (req, res) => {
-    if (req.query.CSCI3916_Assignment_3_raffaelli.movies && req.query.CSCI3916_Assignment_3_raffaelli.reviews == "true") {
+    if (req.query && req.query.reviews == "true") {
        Movie.aggregate([
-        
+
           {
                 $lookup: {
 
@@ -248,7 +248,7 @@ router.route('/movies')
 
                     foreignField: 'movieId',
 
-                    as: 'reviews'
+                    as: 'MovieReviews'
                 }
             },
 
@@ -270,7 +270,7 @@ router.route('/movies')
 
             }
 
-            res.json({msg: "Broken!"})
+            // res.json({msg: "Broken!"})
 
             res.json(doc);
  
@@ -280,9 +280,9 @@ router.route('/movies')
 
     else {
 
-        res.json({msg: "It worked!"})
+        // res.json({msg: "It worked!"})
 
-        Movie.find(function(err, reviews) {
+        Movie.find(function(err, movies) {
 
             if (err) {
 
@@ -290,7 +290,7 @@ router.route('/movies')
 
             }
 
-            res.json(reviews);
+            res.json(movies);
 
         });
 
@@ -392,7 +392,11 @@ router.route('/reviews')
                     return res.json(err);
             }
 
-            res.json({success: true, msg: 'Successfully created new review.'})
+            if (!req.body.movieId != req.query.movies._id){
+                res.json({success: false, msg: 'Invalid save review, movie missing from database!'});
+            }
+
+            res.json({success: true, msg: 'Valid save review, successfully created new review.'})
         });
     }
     )
