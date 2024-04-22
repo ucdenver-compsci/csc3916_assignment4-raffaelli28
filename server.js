@@ -414,7 +414,7 @@ router.route('/reviews')
  //           res.json({success: true, msg: 'VALID, Successfully created new review.'})
   //      });
 
-        if (Movie.findOne({_id: newReview.movieId})){
+        if (Review.findOne({movieId: newReview.movieId})){
             newReview.save(function(err){
                 if(err) {
                     if (err.code == 11000)
