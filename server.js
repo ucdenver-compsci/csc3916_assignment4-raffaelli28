@@ -243,7 +243,7 @@ router.route('/movies')
 
                     from: 'reviews',
 
-                    localField: '_id',
+                    localField: 'review',
 
                     foreignField: 'movieId',
 
