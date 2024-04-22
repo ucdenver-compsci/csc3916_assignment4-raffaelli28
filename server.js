@@ -257,6 +257,10 @@ router.route('/movies')
 
                     avgRating: { $avg: '$reviews.rating' }
 
+                },
+
+                $addFields:{
+                    reviewString: { $review: '$reviews.review'}
                 }
 
             }
@@ -270,7 +274,7 @@ router.route('/movies')
             }
 
             res.json(doc);
-
+ 
         });
 
     }
