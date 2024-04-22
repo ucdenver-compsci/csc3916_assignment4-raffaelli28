@@ -289,7 +289,7 @@ router.route('/movies')
 
             }
 
-            res.json(Review);
+            res.json(movies);
 
         });
 
