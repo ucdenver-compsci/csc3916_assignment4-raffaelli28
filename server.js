@@ -397,23 +397,22 @@ router.route('/reviews')
   //      });
 
         if (Movie.find({movieId: 'newReview.movieId'})){
-            newReview.save(function(err)){
+            newReview.save(function(err){
                 if(err) {
                     if (err.code == 11000)
-                    return res.json({ success: false, message: 'Something went wrong when saving the movie.'});
-                else
-                    return res.json(err);
+                        return res.json({ success: false, message: 'Something went wrong when saving the review.'});
+                    else
+                        return res.json(err);
                 }
 
-                res.json({success: true, msg: 'VALID, Successfully created new review.'})
-            }
+                res.json({success: true, msg: 'VALID, Successfully created new review.'});
+            });
         }
 
-        else {
+        else 
             res.json({ success: false, message: 'INVALID, movie not in database.'});
-        }
-    }
-    )
+        
+    })
 
     .all((req, res) => {
         // Any other HTTP Method
