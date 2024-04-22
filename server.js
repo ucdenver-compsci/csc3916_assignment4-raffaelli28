@@ -236,11 +236,9 @@ router.route('/movies')
     })
 */
 .get(authJwtController.isAuthenticated, (req, res) => {
-    if (req.query.movies && req.query.reviews == "true") {
+    if (req.query.CSCI3916_Assignment_3_raffaelli.movies && req.query.CSCI3916_Assignment_3_raffaelli.reviews == "true") {
        Movie.aggregate([
-        {
-            $match: { _id: Review.movieId }
-        },
+        
           {
                 $lookup: {
 
