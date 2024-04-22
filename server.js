@@ -371,7 +371,7 @@ router.route('/reviews')
         o.status = 200;
         newReview.movieId = req.body.movieId;
 
-        if (Review.find({movieId: newReview.movieId})){
+        if (Review.findOne({movieId: newReview.movieId})){
             // o.message = "Review updated!";
             Review.find(function(err, reviews) {
 
@@ -414,7 +414,7 @@ router.route('/reviews')
  //           res.json({success: true, msg: 'VALID, Successfully created new review.'})
   //      });
 
-        if (Review.findOne({movieId: newReview.movieId})){
+        if (Movie.findOne({_id: newReview.movieId})){
             newReview.save(function(err){
                 if(err) {
                     if (err.code == 11000)
