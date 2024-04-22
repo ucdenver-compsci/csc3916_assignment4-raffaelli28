@@ -386,17 +386,13 @@ router.route('/reviews')
 
         newReview.save(function(err){
             if (err) {
-                if (err.code == 11000)
-                    return res.json({ success: false, message: 'Something went wrong when saving the review.'});
-                else
-                    return res.json(err);
+                if (!Movie.findById(newReview.movieId))
+                    return res.json({ success: false, message: 'INVALID, movie not in database.'});
+                //else
+                    //return res.json(err);
             }
 
-            if (!req.body.movieId != req.query.movies._id){
-                res.json({success: false, msg: 'Invalid save review, movie missing from database!'});
-            }
-
-            res.json({success: true, msg: 'Valid save review, successfully created new review.'})
+            res.json({success: true, msg: 'VALID, Successfully created new review.'})
         });
     }
     )
