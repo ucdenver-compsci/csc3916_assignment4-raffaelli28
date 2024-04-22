@@ -373,8 +373,8 @@ router.route('/reviews')
         // going in the database and manually adding it from there
         // However, if you wish to do it that way, you can uncomment the following
         // line and comment newReview.movieId = req.body.title;
-        // newReview.movieId = req.body.movieId;
-        newReview.movieId = req.body.title;
+        newReview.movieId = req.body.movieId;
+        //newReview.movieId = req.body.title;
         newReview.username = req.body.username;
         newReview.review = req.body.review;
         newReview.rating = req.body.rating;
