@@ -245,7 +245,7 @@ router.route('/movies')
 
                     localField: '_id',
 
-                    foreignField: 'movieId',
+                    foreignField: 'review',
 
                     as: 'reviews'
                 }
@@ -289,7 +289,7 @@ router.route('/movies')
 
             }
 
-            res.json(movies);
+            res.json(Review);
 
         });
 
