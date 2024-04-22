@@ -272,6 +272,8 @@ router.route('/movies')
 
             }
 
+            res.json({msg: "Broken!"})
+
             res.json(doc);
  
         });
@@ -280,7 +282,7 @@ router.route('/movies')
 
     else {
 
-        console.log("Something went wrong");
+        res.json({msg: "It worked!"})
 
         Movie.find(function(err, reviews) {
 
