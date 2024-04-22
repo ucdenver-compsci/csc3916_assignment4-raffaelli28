@@ -255,7 +255,7 @@ router.route('/movies')
 
                 $addFields: {
 
-                    theReviews: { $TheReview: '$reviews.review' }
+                    theReviews: { $TheReview: '$Review.review' }
 
                 }
 
