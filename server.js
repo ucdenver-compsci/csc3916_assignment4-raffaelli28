@@ -371,7 +371,7 @@ router.route('/reviews')
         o.status = 200;
         newReview.movieId = req.body.movieId;
 
-        if (Review.findOne({movieId: newReview.movieId})){
+        if (Review.movieId == newReview.movieId){
             // o.message = "Review updated!";
             Review.find(function(err, reviews) {
 
