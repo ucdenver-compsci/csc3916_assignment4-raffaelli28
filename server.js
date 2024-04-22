@@ -280,6 +280,8 @@ router.route('/movies')
 
     else {
 
+        console.log("Something went wrong");
+
         Movie.find(function(err, reviews) {
 
             if (err) {
