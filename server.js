@@ -236,8 +236,11 @@ router.route('/movies')
     })
 */
 .get(authJwtController.isAuthenticated, (req, res) => {
-    if (req.query && req.query.reviews == "true") {
+    if (req.query.movies && req.query.reviews == "true") {
        Movie.aggregate([
+        {
+            $match: { _id: Review.movieId }
+        },
           {
                 $lookup: {
 
