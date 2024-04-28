@@ -19,6 +19,9 @@ var MovieSchema = new mongoose.Schema({
         actorName: String,
         characterName: String,
     }],
+
+    imageUrl: String,
+
     });
 
 
