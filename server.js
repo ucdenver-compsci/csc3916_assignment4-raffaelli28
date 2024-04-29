@@ -272,6 +272,8 @@ router.route('/movies')
 
            });
 
+           
+
 
     /*
        Movie.aggregate([
@@ -330,10 +332,59 @@ router.route('/movies')
             res.json(movies);
 
         });
-
-        
-
     }
+
+        if (req.query && req.query.Movie === "true") {
+            const aggregate = [
+                {
+                $match: { _id: Movie }
+                },
+                {
+                $lookup: {
+                    from: 'reviews',
+                    localField: '_id',
+                    foreignField: 'movieId',
+                    as: 'movieReviews'
+                }
+                },
+                {
+                $addFields: {
+                    avgRating: { $avg: '$movieReviews.rating' }
+                }
+                }
+            ];
+            Movie.aggregate(aggregate).exec(function(err, doc) { 
+                if (err) {
+
+                    res.status(500).send(err);
+    
+                }
+    
+                // res.json({msg: "Broken!"})
+    
+                res.json(doc);
+            });
+
+        }
+
+        else {
+
+            // res.json({msg: "It worked!"})
+    
+            Movie.find(function(err, movies) {
+    
+                if (err) {
+    
+                    res.status(500).send(err);
+    
+                }
+    
+                res.json(movies);
+    
+            });
+        }
+
+   
 
 })
     .post(authJwtController.isAuthenticated, (req, res) => {
