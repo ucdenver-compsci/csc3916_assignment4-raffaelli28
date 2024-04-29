@@ -67,6 +67,9 @@ function trackDimension(category, action, label, value, dimension, metric) {
 }
 
 
+
+
+
 router.route('/test')
     .get(function (req, res) {
         // Event value must be numeric.
@@ -237,6 +240,40 @@ router.route('/movies')
 */
 .get(authJwtController.isAuthenticated, (req, res) => {
     if (req.query && req.query.reviews == "true") {
+
+        const aggregate = [
+            {
+              $lookup: {
+                from: 'reviews',
+                localField: '_id',
+                foreignField: 'movieId',
+                as: 'movieReviews'
+              }
+            },
+            {
+              $addFields: {
+                avgRating: { $avg: '$movieReviews.rating' }
+              }
+            },
+            {
+              $sort: { avgRating: -1 }
+            }
+          ];
+          Movie.aggregate(aggregate).exec(function(err, docs) { 
+            if (err) {
+
+                res.status(500).send(err);
+
+            }
+
+            // res.json({msg: "Broken!"})
+
+            res.json(doc);
+
+           });
+
+
+    /*
        Movie.aggregate([
 
           {
@@ -274,7 +311,7 @@ router.route('/movies')
 
             res.json(doc);
  
-        });
+        });*/
 
     }
 
@@ -293,6 +330,8 @@ router.route('/movies')
             res.json(movies);
 
         });
+
+        
 
     }
 
