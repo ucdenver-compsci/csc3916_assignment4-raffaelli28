@@ -239,7 +239,7 @@ router.route('/movies')
     })
 */
 .get(authJwtController.isAuthenticated, (req, res) => {
-    if (req.query && req.query.reviews == "true") {
+    if (req.query && req.query.reviews === "true") {
 
         const aggregate = [
             {
