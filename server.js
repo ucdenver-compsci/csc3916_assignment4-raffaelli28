@@ -268,7 +268,7 @@ router.route('/movies')
 
             // res.json({msg: "Broken!"})
 
-            res.json(doc);
+            res.json(docs);
 
            });
 
